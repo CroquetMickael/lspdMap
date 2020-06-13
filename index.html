@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="assets/js/leaftlet/leaflet.js"></script>
+    <link rel="stylesheet" href="assets/js/leaftlet/leaflet.css" />
+    <style>
+      #map {
+        height: 100vh;
+      }
+    </style>
+    <title>LSPD MAP</title>
+  </head>
+  <body>
+    <div id="map"></div>
+  </body>
+  <script>
+    // create the map
+    let map = L.map("map", {
+      center: [150, 755],
+      crs: L.CRS.Simple,
+      zoom: 1,
+    });
+
+    var posteIcon = L.icon({
+      iconUrl: "assets/poste.gif",
+      iconSize: [32, 32], // size of the icon
+    });
+
+    // create the image
+    const imageUrl = "assets/gtasa.svg",
+      imageBounds = [
+        [-26.5, -25],
+        [1021.5, 1023],
+      ];
+
+    let newpopup = L.popup({
+      closeOnClick: false,
+      autoClose: false,
+    }).setContent("<strong>Poste de police</strong>");
+    let newpopup2 = L.popup({
+      closeOnClick: false,
+      autoClose: false,
+    }).setContent("<strong>1A192</strong><br> CASALDO STEWART");
+    L.marker([230, 770], { icon: posteIcon }).bindPopup(newpopup).addTo(map);
+    L.marker([235, 923]).bindPopup(newpopup2).addTo(map).openPopup();
+    L.imageOverlay(imageUrl, imageBounds).addTo(map);
+  </script>
+</html>
