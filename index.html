@@ -48,9 +48,29 @@
       maxZoom: 3,
     });
 
-    var posteIcon = L.icon({
+    const posteIcon = L.icon({
       iconUrl: "assets/poste.gif",
       iconSize: [32, 32], // size of the icon
+    });
+
+    const airIcon = L.icon({
+      iconUrl: "assets/heli.png",
+      iconSize: [32, 32],
+    });
+
+    const policeCarIcon = L.icon({
+      iconUrl: "assets/policecar.png",
+      iconSize: [32, 32],
+    });
+
+    const ctdIcon = L.icon({
+      iconUrl: "assets/ctd.png",
+      iconSize: [32, 32],
+    });
+
+    const unknownIcon = L.icon({
+      iconUrl: "assets/unknown.png",
+      iconSize: [32, 32],
     });
 
     // create the image
@@ -61,6 +81,7 @@
       ];
 
     var markers = {}; // Dictionary to hold your markers in an outer scope.
+    var blipsAdded = {};
 
     function getData() {
       fetch("https://centralizer.herokuapp.com/retrieve")
@@ -77,29 +98,48 @@
 
     function AddOrUpdateMarkers(data) {
       var blips = data.blips;
+
       blips.forEach((blip) => {
-        var id = blip.text;
+        var id = blip.owner;
         var latLng = [blip.position.y, blip.position.x];
         let blipPopup = L.popup({
           closeOnClick: true,
           autoClose: false,
-        }).setContent("<b><span> Name:</span> " + id + "</b>");
-        if (id !== "OFF") {
-          if (!markers[id]) {
-            // If there is no marker with this id yet, instantiate a new one.
-            markers[id] = L.marker(latLng).addTo(map).bindPopup(blipPopup);
-          } else {
-            // If there is already a marker with this id, simply modify its position.
-            markers[id].setLatLng(latLng).bindPopup(blipPopup);
-          }
+        }).setContent("<b>" + id + "</b></br>" + blip.text);
+        let iconToUse = "";
+        if (blip.type == "air") {
+          iconToUse = airIcon;
+        } else if (blip.type == "policecar"){
+          iconToUse = policeCarIcon;
+        } else if (blip.type == "ctd"){
+          iconToUse = ctdIcon;
+        } else {
+          iconToUse = unknownIcon;
         }
+        if (!markers[id]) {
+          // If there is no marker with this id yet, instantiate a new one.
+          markers[id] = L.marker(latLng, { icon: iconToUse })
+            .addTo(map)
+            .bindPopup(blipPopup);
+        } else {
+          // If there is already a marker with this id, simply modify its position.
+          markers[id].setLatLng(latLng, { icon: iconToUse }).bindPopup(blipPopup);
+        }
+        blipsAdded[id] = id;
       });
+      for (let [key, value] of Object.entries(markers)) {
+        if (!blipsAdded[key]) {
+          map.removeLayer(value);
+          delete markers[key];
+        }
+      }
       if (blips.length == 0 && markers != {}) {
         for (let [key, value] of Object.entries(markers)) {
           map.removeLayer(value);
         }
         markers = {};
       }
+      blipsAdded = {};
     }
 
     // 2526.0974,-2696.7273 port
