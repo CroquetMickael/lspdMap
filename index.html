@@ -68,6 +68,11 @@
       iconSize: [32, 32],
     });
 
+    const pedIcon = L.icon({
+      iconUrl: "assets/ped.png",
+      iconSize: [32, 32],
+    });
+
     const unknownIcon = L.icon({
       iconUrl: "assets/unknown.png",
       iconSize: [32, 32],
@@ -109,10 +114,12 @@
         let iconToUse = "";
         if (blip.type == "air") {
           iconToUse = airIcon;
-        } else if (blip.type == "policecar"){
+        } else if (blip.type == "policecar") {
           iconToUse = policeCarIcon;
-        } else if (blip.type == "ctd"){
+        } else if (blip.type == "ctd") {
           iconToUse = ctdIcon;
+        } else if (blip.type == "ped") {
+          iconToUse = pedIcon;
         } else {
           iconToUse = unknownIcon;
         }
@@ -123,7 +130,7 @@
             .bindPopup(blipPopup);
         } else {
           // If there is already a marker with this id, simply modify its position.
-          markers[id].setLatLng(latLng, { icon: iconToUse }).bindPopup(blipPopup);
+          markers[id].setLatLng(latLng).setIcon(iconToUse).bindPopup(blipPopup);
         }
         blipsAdded[id] = id;
       });
