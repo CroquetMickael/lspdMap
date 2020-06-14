@@ -14,29 +14,29 @@
  * class. See the full CSS for all customizable options:
  * https://github.com/mapbox/mapbox.js/blob/001754177f3985c0e6b4a26e3c869b0c66162c99/theme/style.css#L321-L366
 */
-.custom-popup .leaflet-popup-content-wrapper {
-  background:#2c3e50;
-  color:#fff;
-  font-size:16px;
-  line-height:24px;
-  }
-.custom-popup .leaflet-popup-content-wrapper a {
-  color:rgba(255,255,255,0.5);
-  }
-.custom-popup .leaflet-popup-tip-container {
-  width:30px;
-  height:15px;
-  }
-.custom-popup .leaflet-popup-tip {
-  border-left:15px solid transparent;
-  border-right:15px solid transparent;
-  border-top:15px solid #2c3e50;
-  }
+      .custom-popup .leaflet-popup-content-wrapper {
+        background: #2c3e50;
+        color: #fff;
+        font-size: 16px;
+        line-height: 24px;
+      }
+      .custom-popup .leaflet-popup-content-wrapper a {
+        color: rgba(255, 255, 255, 0.5);
+      }
+      .custom-popup .leaflet-popup-tip-container {
+        width: 30px;
+        height: 15px;
+      }
+      .custom-popup .leaflet-popup-tip {
+        border-left: 15px solid transparent;
+        border-right: 15px solid transparent;
+        border-top: 15px solid #2c3e50;
+      }
     </style>
     <title>LSPD MAP</title>
   </head>
   <body>
-    <div class='custom-popup' id="map"></div>
+    <div class="custom-popup" id="map"></div>
   </body>
   <script>
     // create the map
@@ -44,6 +44,8 @@
       center: [150, 755],
       crs: L.CRS.Simple,
       zoom: 1,
+      minZoom: -2,
+      maxZoom: 3,
     });
 
     var posteIcon = L.icon({
@@ -58,47 +60,55 @@
         [3000, 3000],
       ];
 
-      var markers = {}; // Dictionary to hold your markers in an outer scope.
+    var markers = {}; // Dictionary to hold your markers in an outer scope.
 
- function getData() {
-  fetch('https://centralizer.herokuapp.com/retrieve')
-  .then(response => response.json())
-  .then(data => {
-    console.log(data)
-    AddOrUpdateMarkers(data)})};
-
-
-  setInterval(function() {
-  getData();
-}, 5000)
-
-function AddOrUpdateMarkers(data) {
-  var blips = data.blips;
-  blips.forEach(blip =>  {
-    var id = blip.text;
-    var latLng = [blip.position.y, blip.position.x];
-    let blipPopup = L.popup({
-      closeOnClick: false,
-      autoClose: false,
-    }).setContent('<b><span> Name:</span>' + id + '</b>');
-
-    if (!markers[id]) {
-      // If there is no marker with this id yet, instantiate a new one.
-      markers[id] = L.marker(latLng).addTo(map).bindPopup(blipPopup);
-    } else {
-      // If there is already a marker with this id, simply modify its position.
-      markers[id].setLatLng(latLng).bindPopup(blipPopup);
+    function getData() {
+      fetch("https://centralizer.herokuapp.com/retrieve")
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          AddOrUpdateMarkers(data);
+        });
     }
-  });
-}
 
-// 2526.0974,-2696.7273 port
+    setInterval(function () {
+      getData();
+    }, 5000);
+
+    function AddOrUpdateMarkers(data) {
+      var blips = data.blips;
+      blips.forEach((blip) => {
+        var id = blip.text;
+        var latLng = [blip.position.y, blip.position.x];
+        let blipPopup = L.popup({
+          closeOnClick: true,
+          autoClose: false,
+        }).setContent("<b><span> Name:</span> " + id + "</b>");
+        if (id !== "OFF") {
+          if (!markers[id]) {
+            // If there is no marker with this id yet, instantiate a new one.
+            markers[id] = L.marker(latLng).addTo(map).bindPopup(blipPopup);
+          } else {
+            // If there is already a marker with this id, simply modify its position.
+            markers[id].setLatLng(latLng).bindPopup(blipPopup);
+          }
+        }
+      });
+      if (blips.length == 0 && markers != {}) {
+        for (let [key, value] of Object.entries(markers)) {
+          map.removeLayer(value);
+        }
+        markers = {};
+      }
+    }
+
+    // 2526.0974,-2696.7273 port
     // -2371.7661,2210.2646 bayside
     let newpopup = L.popup({
-      closeOnClick: false,
+      closeOnClick: true,
       autoClose: false,
     }).setContent("<strong>Poste de police</strong>");
-    L.marker([-1680, 1560], {icon: posteIcon}).bindPopup(newpopup).addTo(map);
+    L.marker([-1680, 1560], { icon: posteIcon }).bindPopup(newpopup).addTo(map);
     L.imageOverlay(imageUrl, imageBounds).addTo(map);
   </script>
 </html>
