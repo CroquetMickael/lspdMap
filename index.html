@@ -253,14 +253,28 @@
         } else {
           iconToUse = unknownIcon;
         }
+        const firstSpaceindex = blip.text.indexOf(" ");
+        let unit = blip.text.substring(0, firstSpaceindex);
+        if(unit === "")
+        {
+          unit = blip.text
+        }
         if (!markers[id]) {
           // If there is no marker with this id yet, instantiate a new one.
           markers[id] = L.marker(latLng, { icon: iconToUse })
             .addTo(map)
-            .bindPopup(blipPopup);
+            .bindPopup(blipPopup).bindTooltip(unit, {
+              direction: "bottom",
+              offset : [0, 15],
+              permanent: true
+            }).openTooltip();
         } else {
           // If there is already a marker with this id, simply modify its position.
-          markers[id].setLatLng(latLng).setIcon(iconToUse).bindPopup(blipPopup);
+          markers[id].setLatLng(latLng).setIcon(iconToUse).bindPopup(blipPopup).setTooltipContent(unit, {
+              direction: "bottom",
+              offset : [0, 15],
+              permanent: true
+            }).openTooltip();;
         }
         blipsAdded[id] = id;
       });
