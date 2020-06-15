@@ -14,23 +14,21 @@
  * class. See the full CSS for all customizable options:
  * https://github.com/mapbox/mapbox.js/blob/001754177f3985c0e6b4a26e3c869b0c66162c99/theme/style.css#L321-L366
 */
-      .custom-popup .leaflet-popup-content-wrapper {
+
+      .leaflet-popup-content-wrapper {
         background: #2c3e50;
         color: #fff;
         font-size: 16px;
         line-height: 24px;
       }
-      .custom-popup .leaflet-popup-content-wrapper a {
-        color: rgba(255, 255, 255, 0.5);
+
+      .leaflet-popup-tip-container {
+        width: 40px;
+        height: 20px;
       }
-      .custom-popup .leaflet-popup-tip-container {
-        width: 30px;
-        height: 15px;
-      }
-      .custom-popup .leaflet-popup-tip {
-        border-left: 15px solid transparent;
-        border-right: 15px solid transparent;
-        border-top: 15px solid #2c3e50;
+
+      .leaflet-popup-tip {
+        background: #2c3e50;
       }
       .blue {
         fill: blue;
@@ -82,14 +80,23 @@
 
     function AddOrUpdateMarkers(data) {
       var blips = data.blips;
-
+      let persons = "";
       blips.forEach((blip) => {
         var id = blip.owner;
         var latLng = [blip.position.y, blip.position.x];
+        const firstSpaceindex = blip.text.indexOf(" ");
+        let unit = blip.text.substring(0, firstSpaceindex);
+        if (unit === "") {
+          unit = blip.text;
+        } else {
+          persons = blip.text.substring(firstSpaceindex);
+        }
+
         let blipPopup = L.popup({
           closeOnClick: true,
           autoClose: false,
-        }).setContent("<b>" + id + "</b></br>" + blip.text);
+        }).setContent(persons);
+
         let iconToUse = "";
 
         const airIcon = L.divIcon({
@@ -253,30 +260,64 @@
         } else {
           iconToUse = unknownIcon;
         }
-        const firstSpaceindex = blip.text.indexOf(" ");
-        let unit = blip.text.substring(0, firstSpaceindex);
-        if(unit === "")
-        {
-          unit = blip.text
+        if (
+          blip.text !== "OFF" &&
+          blip.text != "OFF." &&
+          blip.text !== "off." &&
+          blip.text !== "off" &&
+          blip.text !== "Off." &&
+          blip.text !== "Off"
+        ) {
+          if (!markers[id]) {
+            // If there is no marker with this id yet, instantiate a new one.
+            if (persons !== "") {
+              markers[id] = L.marker(latLng, { icon: iconToUse })
+                .addTo(map)
+                .bindPopup(blipPopup)
+                .bindTooltip(unit, {
+                  direction: "bottom",
+                  offset: [0, 15],
+                  permanent: true,
+                })
+                .openTooltip();
+            } else {
+              markers[id] = L.marker(latLng, { icon: iconToUse })
+                .addTo(map)
+                .bindTooltip(unit, {
+                  direction: "bottom",
+                  offset: [0, 15],
+                  permanent: true,
+                })
+                .openTooltip();
+            }
+          } else {
+            // If there is already a marker with this id, simply modify its position.
+            if (persons !== "") {
+              markers[id]
+                .setLatLng(latLng)
+                .setIcon(iconToUse)
+                .bindPopup(blipPopup)
+                .setTooltipContent(unit, {
+                  direction: "bottom",
+                  offset: [0, 15],
+                  permanent: true,
+                })
+                .openTooltip();
+            } else {
+              markers[id]
+                .setLatLng(latLng)
+                .setIcon(iconToUse)
+                .unbindPopup(blipPopup)
+                .setTooltipContent(unit, {
+                  direction: "bottom",
+                  offset: [0, 15],
+                  permanent: true,
+                })
+                .openTooltip();
+            }
+          }
+          blipsAdded[id] = id;
         }
-        if (!markers[id]) {
-          // If there is no marker with this id yet, instantiate a new one.
-          markers[id] = L.marker(latLng, { icon: iconToUse })
-            .addTo(map)
-            .bindPopup(blipPopup).bindTooltip(unit, {
-              direction: "bottom",
-              offset : [0, 15],
-              permanent: true
-            }).openTooltip();
-        } else {
-          // If there is already a marker with this id, simply modify its position.
-          markers[id].setLatLng(latLng).setIcon(iconToUse).bindPopup(blipPopup).setTooltipContent(unit, {
-              direction: "bottom",
-              offset : [0, 15],
-              permanent: true
-            }).openTooltip();;
-        }
-        blipsAdded[id] = id;
       });
       for (let [key, value] of Object.entries(markers)) {
         if (!blipsAdded[key]) {
