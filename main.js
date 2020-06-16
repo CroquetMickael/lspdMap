@@ -28,12 +28,33 @@ function getData() {
         .then((data) => {
             console.log(data);
             AddOrUpdateMarkers(data);
+            UpdateText(data);
         });
 }
 
 setInterval(function () {
     getData();
 }, 1000);
+
+function UpdateText(data) {
+    let msgs = data.messages;
+
+    const history = document.getElementById("history");
+    history.innerHTML = '';
+
+    for (let msg of msgs) {
+        let childDom = document.createElement("div");
+        childDom.className = "entry";
+        childDom.innerHTML =
+            `
+                <span class="msg">
+                    ${msg.fulltext}
+                </span>
+            `;
+        history.append(childDom);
+	}
+
+}
 
 function AddOrUpdateMarkers(data) {
     var blips = data.blips;
