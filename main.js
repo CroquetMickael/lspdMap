@@ -28,7 +28,8 @@ function getData() {
         .then((data) => {
             console.log(data);
             AddOrUpdateMarkers(data);
-            UpdateText(data);
+            UpdateChat(data);
+            UpdateDashboard(data);
         });
 }
 
@@ -36,7 +37,24 @@ setInterval(function () {
     getData();
 }, 1000);
 
-function UpdateText(data) {
+function UpdateDashboard(data) {
+    let plys = data.persons;
+
+    const dashboardcontent = document.getElementById("dashboard-content");
+    dashboardcontent.innerHTML = '';
+
+    for (let ply of plys) {
+        let childDom = document.createElement("div");
+        childDom.className = "dashboard-content";
+        childDom.innerHTML =
+            `
+                    ${ply.name}: ${ply.occupation}
+            `;
+        dashboardcontent.append(childDom);
+    }
+}
+
+function UpdateChat(data) {
     let msgs = data.messages;
 
     const history = document.getElementById("history");
@@ -52,8 +70,10 @@ function UpdateText(data) {
                 </span>
             `;
         history.append(childDom);
-	}
+    }
 
+    const chat = document.getElementById("chat");
+    chat.scroll(0, chat.scrollHeight);
 }
 
 function AddOrUpdateMarkers(data) {
