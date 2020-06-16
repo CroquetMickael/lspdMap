@@ -1,6 +1,12 @@
 #map {
     height: 100vh;
 }
+
+/* remove weird margin*/
+body {
+    margin: 0;
+}
+
 /*
  * These CSS rules affect the tooltips within maps with the custom-popup
  * class. See the full CSS for all customizable options:
