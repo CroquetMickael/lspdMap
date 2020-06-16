@@ -3,8 +3,10 @@ let map = L.map("map", {
     center: [150, 755],
     crs: L.CRS.Simple,
     zoom: 1,
-    minZoom: -2,
+    minZoom: -5,
     maxZoom: 3,
+
+    zoomControl: false
 });
 
 const posteIcon = L.icon({
@@ -62,7 +64,8 @@ function UpdateChat(data) {
 
     for (let msg of msgs) {
         let childDom = document.createElement("div");
-        childDom.className = "entry";
+        childDom.className = "entry msgtype-" + msg.type;
+
         childDom.innerHTML =
             `
                 <span class="msg">

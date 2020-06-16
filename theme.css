@@ -10,7 +10,6 @@
 }
 
 #chat {
-
     width: 20vw;
     right: 0;
 }
@@ -30,14 +29,18 @@
     overflow: auto;
 }
 
-.history{
-    
-}
-
+.history {
+    padding: 5px;
+}   
 
 /* remove weird margin*/
 body {
     margin: 0;
+    font-family: arial,sans-serif;
+    
+}
+.leaflet-container {
+    background-color: #2f4f4f;
 }
 
 /*
@@ -45,7 +48,6 @@ body {
  * class. See the full CSS for all customizable options:
  * https://github.com/mapbox/mapbox.js/blob/001754177f3985c0e6b4a26e3c869b0c66162c99/theme/style.css#L321-L366
 */
-
 .leaflet-popup-content-wrapper {
     background: #2c3e50;
     color: #fff;
@@ -95,4 +97,23 @@ body {
 
 .leaflet-tooltip-right.class-tooltip::before {
     border-right-color: transparent;
+}
+
+.entry {
+    font-size:  smaller;
+}
+
+.msgtype-radio {
+}
+
+.msgtype-com {
+    color: darkred;
+}
+
+.msgtype-balise {
+    color: lightblue;
+}
+
+.msgtype-911{
+    font-weight: bold;
 }
