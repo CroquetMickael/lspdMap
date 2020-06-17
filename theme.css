@@ -1,0 +1,119 @@
+#map {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left:0;
+    right:0;
+    height: 100vh;
+
+    z-index:1;
+}
+
+#chat {
+    width: 20vw;
+    right: 0;
+}
+
+#dashboard {
+    
+    width: 20vw;
+}
+
+.pane {
+    background-color: rgba(255, 255, 255, .25);
+    z-index: 10;
+    color: blue;
+    max-height: 100vh;
+    position: absolute;
+    height: 100vh;
+    overflow: auto;
+}
+
+.history {
+    padding: 5px;
+}   
+
+/* remove weird margin*/
+body {
+    margin: 0;
+    font-family: arial,sans-serif;
+    
+}
+.leaflet-container {
+    background-color: #2f4f4f;
+}
+
+/*
+ * These CSS rules affect the tooltips within maps with the custom-popup
+ * class. See the full CSS for all customizable options:
+ * https://github.com/mapbox/mapbox.js/blob/001754177f3985c0e6b4a26e3c869b0c66162c99/theme/style.css#L321-L366
+*/
+.leaflet-popup-content-wrapper {
+    background: #2c3e50;
+    color: #fff;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.leaflet-popup-tip-container {
+    width: 40px;
+    height: 20px;
+}
+
+.leaflet-popup-tip {
+    background: #2c3e50;
+}
+
+.blue {
+    fill: blue;
+    color: blue;
+}
+
+.red {
+    fill: red;
+    color: red;
+}
+
+.green {
+    fill: green;
+    color: green;
+}
+
+.violet {
+    fill: purple;
+    color: purple;
+}
+
+.class-tooltip {
+    background: transparent;
+    border: transparent;
+    color: white;
+    box-shadow: none;
+}
+
+.leaflet-tooltip-left.class-tooltip::before {
+    border-left-color: transparent;
+}
+
+.leaflet-tooltip-right.class-tooltip::before {
+    border-right-color: transparent;
+}
+
+.entry {
+    font-size:  smaller;
+}
+
+.msgtype-radio {
+}
+
+.msgtype-com {
+    color: darkred;
+}
+
+.msgtype-balise {
+    color: lightblue;
+}
+
+.msgtype-911{
+    font-weight: bold;
+}
