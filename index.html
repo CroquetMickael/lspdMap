@@ -16,31 +16,35 @@
       <button class="tablinks" onclick="openTabs(event, 'chat')">
         Communication radio
       </button>
+      <button class="tablinks" onclick="openTabs(event, 'deux')">
+        Les deux
+      </button>
       <button class="tablinks" onclick="openTabs(event, 'close')">
         X
       </button>
     </div>
-    <div class="tabContent dashboard" id="dashboard">
-      <h1 class="dashboard-title">
-        Dashboard
-      </h1>
-      <table>
-        <thead>
-          <tr>
-            <th>Personne(s)</th>
-            <th>Occupation(s)</th>
-          </tr>
-        </thead>
-        <tbody id="dashboard-content"></tbody>
-      </table>
-    </div>
-    <div class="tabContent chat pane" id="chat">
-      <!--<h1>
+    <div class="flex-container">
+      <div class="tabContent dashboard" id="dashboard">
+        <h1 class="dashboard-title">
+          Dashboard
+        </h1>
+        <table>
+          <thead>
+            <tr>
+              <th>Personne(s)</th>
+              <th>Occupation(s)</th>
+            </tr>
+          </thead>
+          <tbody id="dashboard-content"></tbody>
+        </table>
+      </div>
+      <div class="tabContent chat pane" id="chat">
+        <!--<h1>
         Historique
         </h1>-->
-      <div id="history"></div>
+        <div id="history"></div>
+      </div>
     </div>
-
     <div class="custom-popup" id="map"></div>
     <script src="icons.js"></script>
     <script src="main.js"></script>

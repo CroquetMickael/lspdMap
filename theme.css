@@ -14,8 +14,6 @@
   z-index: 10;
   max-height: 40vh;
   width: 100vw;
-  position: absolute;
-  bottom: 0;
   height: 40vh;
   overflow: auto;
 }
@@ -23,8 +21,6 @@
   z-index: 10;
   max-height: 40vh;
   width: 100vw;
-  position: absolute;
-  bottom: 0;
   height: 40vh;
   overflow: auto;
 }
@@ -38,6 +34,7 @@
   display: none;
   animation: fadeEffect 1s; /* Fading effect takes 1 second */
 }
+
 
 .tab button.active {
   background-color: rgba(255, 82, 1, 0.5);
@@ -69,7 +66,7 @@
 /*Table Style*/
 
 table {
-  width: 70%;
+  width: 90%;
   align-self: center;
   text-align: center;
   border-collapse: collapse;
@@ -101,7 +98,16 @@ table thead th:first-child {
     opacity: 1;
   }
 }
+.flex-container {
+display: flex;
+position: absolute;
+width: 100%;
+bottom: 0;
+height: 40vh;
 
+  /* Then we define how is distributed the remaining space */
+  justify-content: space-around;
+}
 /* remove weird margin*/
 body {
   margin: 0;
@@ -173,14 +179,17 @@ body {
 }
 
 .msgtype-radio {
-  color: blue;
+  color: rgb(15, 1, 207);
 }
 
+.msgtype-dep {
+  color: rgb(207, 1, 1);
+}
 .msgtype-com {
   color: darkred;
 }
 
-.msgtype-balise {
+.msgtype-demande {
   color: lightblue;
 }
 

@@ -15,8 +15,17 @@ function openTabs(evt, tabsName) {
   for (let tablink of tablinks) {
     tablink.className = tablink.className.replace(" active", "");
   }
-  if (tabsName !== "close") {
+  if (tabsName !== "close" && tabsName !== "deux") {
     document.getElementById(tabsName).style.display = "block";
+    document.getElementById(tabsName).style.width = "";
+    document.getElementById(tabsName).style.left= "";
+    evt.currentTarget.className += " active";
+  }
+  if(tabsName == "deux"){
+    let dashboard = document.getElementById("dashboard")
+    dashboard.style.display = "block";
+    let chat = document.getElementById("chat")
+    chat.style.display = "block";
     evt.currentTarget.className += " active";
   }
 }
