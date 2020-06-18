@@ -1,46 +1,76 @@
 #map {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left:0;
-    right:0;
-    height: 100vh;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100vh;
 
-    z-index:1;
+  z-index: 1;
 }
 
-#chat {
-    width: 20vw;
-    right: 0;
-}
-
-#dashboard {
-    
-    width: 20vw;
-}
 
 .pane {
-    background-color: rgba(255, 255, 255, .25);
-    z-index: 10;
-    color: blue;
-    max-height: 100vh;
-    position: absolute;
-    height: 100vh;
-    overflow: auto;
+  background-color: rgba(83, 83, 83, 0.25);
+  z-index: 10;
+  max-height: 40vh;
+  width: 100vw;
+  position: absolute;
+  bottom: 0;
+  height: 40vh;
+  overflow: auto;
 }
 
-.history {
-    padding: 5px;
-}   
+/* Tabs style */
+.tabContent {
+  display: none;
+  animation: fadeEffect 1s; /* Fading effect takes 1 second */
+}
+
+.tab button.active {
+  background-color: rgba(255, 82, 1, 0.5);
+}
+
+.tab button:hover {
+  background-color: rgba(255, 82, 1, 0.5);
+}
+
+.tab button {
+  background-color: inherit;
+  color: white;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-size: 17px;
+  z-index: 30;
+}
+.tab {
+  z-index: 20;
+  overflow: hidden;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.185);
+}
+
+/* Go from zero to full opacity */
+@keyframes fadeEffect {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
 
 /* remove weird margin*/
 body {
-    margin: 0;
-    font-family: arial,sans-serif;
-    
+  margin: 0;
+  font-family: arial, sans-serif;
 }
 .leaflet-container {
-    background-color: #2f4f4f;
+  background-color: #2f4f4f;
 }
 
 /*
@@ -49,71 +79,73 @@ body {
  * https://github.com/mapbox/mapbox.js/blob/001754177f3985c0e6b4a26e3c869b0c66162c99/theme/style.css#L321-L366
 */
 .leaflet-popup-content-wrapper {
-    background: #2c3e50;
-    color: #fff;
-    font-size: 16px;
-    line-height: 24px;
+  background: #2c3e50;
+  color: #fff;
+  font-size: 16px;
+  line-height: 24px;
 }
 
 .leaflet-popup-tip-container {
-    width: 40px;
-    height: 20px;
+  width: 40px;
+  height: 20px;
 }
 
 .leaflet-popup-tip {
-    background: #2c3e50;
+  background: #2c3e50;
 }
 
 .blue {
-    fill: blue;
-    color: blue;
+  fill: blue;
+  color: blue;
 }
 
 .red {
-    fill: red;
-    color: red;
+  fill: red;
+  color: red;
 }
 
 .green {
-    fill: green;
-    color: green;
+  fill: green;
+  color: green;
 }
 
 .violet {
-    fill: purple;
-    color: purple;
+  fill: purple;
+  color: purple;
 }
 
 .class-tooltip {
-    background: transparent;
-    border: transparent;
-    color: white;
-    box-shadow: none;
+  background: transparent;
+  border: transparent;
+  color: white;
+  box-shadow: none;
 }
 
 .leaflet-tooltip-left.class-tooltip::before {
-    border-left-color: transparent;
+  border-left-color: transparent;
 }
 
 .leaflet-tooltip-right.class-tooltip::before {
-    border-right-color: transparent;
+  border-right-color: transparent;
 }
 
 .entry {
-    font-size:  smaller;
+  font-size: medium;
+  font-weight: bold;
 }
 
 .msgtype-radio {
+  color: blue;
 }
 
 .msgtype-com {
-    color: darkred;
+  color: darkred;
 }
 
 .msgtype-balise {
-    color: lightblue;
+  color: lightblue;
 }
 
-.msgtype-911{
-    font-weight: bold;
+.msgtype-911 {
+  color: yellow;
 }
