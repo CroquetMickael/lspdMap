@@ -35,7 +35,6 @@
   animation: fadeEffect 1s; /* Fading effect takes 1 second */
 }
 
-
 .tab button.active {
   background-color: rgba(255, 82, 1, 0.5);
 }
@@ -99,11 +98,11 @@ table thead th:first-child {
   }
 }
 .flex-container {
-display: flex;
-position: absolute;
-width: 100%;
-bottom: 0;
-height: 40vh;
+  display: flex;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  height: 40vh;
 
   /* Then we define how is distributed the remaining space */
   justify-content: space-around;
@@ -174,6 +173,11 @@ body {
 }
 
 .entry {
+  text-shadow: 0px 1px 0px black;
+  font-family: Arial;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 100;
   font-size: medium;
   font-weight: bold;
 }
