@@ -25,6 +25,11 @@
   overflow: auto;
 }
 
+.dashboard-zoomable:hover {
+  cursor: pointer;
+  background-color: rgba(255, 82, 1, 0.5);
+}
+
 .dashboard-title {
   color: white;
   text-align: center;
@@ -171,6 +176,7 @@ body {
 .leaflet-tooltip-right.class-tooltip::before {
   border-right-color: transparent;
 }
+
 
 .entry {
   text-shadow: 0px 1px 0px black;

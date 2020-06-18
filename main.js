@@ -9,6 +9,19 @@ let map = L.map("map", {
   zoomControl: false,
 });
 
+function isOff(text) {
+  if (
+    text !== "OFF" &&
+    text != "OFF." &&
+    text !== "off." &&
+    text !== "off" &&
+    text !== "Off." &&
+    text !== "Off"
+  ) {
+    return false;
+  }
+  return true;
+}
 const posteIcon = L.icon({
   iconUrl: "assets/poste.gif",
   iconSize: [32, 32],
@@ -55,7 +68,14 @@ function UpdateDashboard(data) {
       persons = ply.occupation.substring(firstSpaceindex);
     }
     let childDomTR = document.createElement("tr");
-    childDomTR.className = "dashboard-content";
+ 
+    if (!isOff(ply.occupation)) {
+      childDomTR.onclick = function click() {
+        map.flyTo([ply.position.y, ply.position.x], 1);
+      };
+      childDomTR.className = "dashboard-zoomable";
+    }
+
     childDomTR.innerHTML = `
                     <td>${ply.name}</td><td>${unit}${persons}</td>
             `;
@@ -106,14 +126,7 @@ function AddOrUpdateMarkers(data) {
     let iconToUse = "";
 
     iconToUse = checkIcons(blip, iconToUse);
-    if (
-      blip.text !== "OFF" &&
-      blip.text != "OFF." &&
-      blip.text !== "off." &&
-      blip.text !== "off" &&
-      blip.text !== "Off." &&
-      blip.text !== "Off"
-    ) {
+    if (!isOff(blip.text)) {
       if (!markers[id]) {
         // If there is no marker with this id yet, instantiate a new one.
         if (persons !== "") {
