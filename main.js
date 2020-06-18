@@ -48,6 +48,7 @@ function UpdateDashboard(data) {
   for (let ply of plys) {
     const firstSpaceindex = ply.occupation.indexOf(" ");
     let unit = ply.occupation.substring(0, firstSpaceindex);
+    let persons = "";
     if (unit === "") {
       unit = ply.occupation;
     } else {
