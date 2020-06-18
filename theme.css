@@ -9,7 +9,6 @@
   z-index: 1;
 }
 
-
 .pane {
   background-color: rgba(83, 83, 83, 0.25);
   z-index: 10;
@@ -52,6 +51,31 @@
   overflow: hidden;
   position: absolute;
   background-color: rgba(0, 0, 0, 0.185);
+}
+
+/*Table Style*/
+
+table {
+  width: 50%;
+  align-self: center;
+  text-align: center;
+  border-collapse: collapse;
+  margin: 0 auto;
+}
+table tbody td {
+  font-size: 13px;
+  color: white;
+}
+table thead {
+  background: #9e3c048e;
+}
+table thead th {
+  font-size: 15px;
+  font-weight: bold;
+  color: #FFFFFF;
+}
+table thead th:first-child {
+  border-left: none;
 }
 
 /* Go from zero to full opacity */
